@@ -1,0 +1,138 @@
+/**
+ * These arguments were used when this file was generated. They will be automatically applied on subsequent loads
+ * via the GUI or CLI. Run CLI with '--help' for additional information on how to override these arguments.
+ * @cliArgs --device "MSPM0L130X" --package "VQFN-32(RHB)" --part "Default" --product "mspm0_sdk@1.20.01.06"
+ * @versions {"tool":"1.18.1+3343"}
+ */
+
+/**
+ * Import the modules used in this configuration.
+ */
+const Board  = scripting.addModule("/ti/driverlib/Board");
+const GPIO   = scripting.addModule("/ti/driverlib/GPIO", {}, false);
+const GPIO1  = GPIO.addInstance();
+const GPIO2  = GPIO.addInstance();
+const GPIO3  = GPIO.addInstance();
+const PWM    = scripting.addModule("/ti/driverlib/PWM", {}, false);
+const PWM1   = PWM.addInstance();
+const SYSCTL = scripting.addModule("/ti/driverlib/SYSCTL");
+const TIMER  = scripting.addModule("/ti/driverlib/TIMER", {}, false);
+const TIMER1 = TIMER.addInstance();
+const TIMER2 = TIMER.addInstance();
+const UART   = scripting.addModule("/ti/driverlib/UART", {}, false);
+const UART1  = UART.addInstance();
+
+/**
+ * Write custom configuration values to the imported modules.
+ */
+
+GPIO1.$name                          = "GPIO_GRP_0";
+GPIO1.associatedPins.create(5);
+GPIO1.associatedPins[0].$name        = "CS";
+GPIO1.associatedPins[0].assignedPort = "PORTA";
+GPIO1.associatedPins[0].initialValue = "SET";
+GPIO1.associatedPins[0].ioStructure  = "SD";
+GPIO1.associatedPins[0].assignedPin  = "2";
+GPIO1.associatedPins[1].$name        = "LED";
+GPIO1.associatedPins[1].assignedPort = "PORTA";
+GPIO1.associatedPins[1].assignedPin  = "25";
+GPIO1.associatedPins[2].assignedPin  = "6";
+GPIO1.associatedPins[2].$name        = "D0";
+GPIO1.associatedPins[3].$name        = "D1";
+GPIO1.associatedPins[3].assignedPin  = "5";
+GPIO1.associatedPins[4].$name        = "DC";
+GPIO1.associatedPins[4].assignedPin  = "4";
+
+GPIO2.$name                              = "KEY";
+GPIO2.associatedPins.create(8);
+GPIO2.associatedPins[0].$name            = "H1";
+GPIO2.associatedPins[0].pin.$assign      = "PA0";
+GPIO2.associatedPins[1].$name            = "H2";
+GPIO2.associatedPins[1].pin.$assign      = "PA1";
+GPIO2.associatedPins[2].$name            = "H3";
+GPIO2.associatedPins[2].assignedPin      = "7";
+GPIO2.associatedPins[3].$name            = "H4";
+GPIO2.associatedPins[3].assignedPin      = "12";
+GPIO2.associatedPins[4].$name            = "V1";
+GPIO2.associatedPins[4].direction        = "INPUT";
+GPIO2.associatedPins[4].assignedPin      = "13";
+GPIO2.associatedPins[4].polarity         = "FALL";
+GPIO2.associatedPins[4].internalResistor = "PULL_UP";
+GPIO2.associatedPins[5].$name            = "V2";
+GPIO2.associatedPins[5].direction        = "INPUT";
+GPIO2.associatedPins[5].polarity         = "FALL";
+GPIO2.associatedPins[5].assignedPin      = "14";
+GPIO2.associatedPins[5].internalResistor = "PULL_UP";
+GPIO2.associatedPins[6].$name            = "V3";
+GPIO2.associatedPins[6].direction        = "INPUT";
+GPIO2.associatedPins[6].assignedPin      = "17";
+GPIO2.associatedPins[6].polarity         = "FALL";
+GPIO2.associatedPins[6].internalResistor = "PULL_UP";
+GPIO2.associatedPins[7].$name            = "V4";
+GPIO2.associatedPins[7].direction        = "INPUT";
+GPIO2.associatedPins[7].assignedPin      = "18";
+GPIO2.associatedPins[7].polarity         = "FALL";
+GPIO2.associatedPins[7].internalResistor = "PULL_UP";
+
+GPIO3.$name                          = "BUZZER";
+GPIO3.associatedPins[0].$name        = "PIN_0";
+GPIO3.associatedPins[0].initialValue = "SET";
+GPIO3.associatedPins[0].pin.$assign  = "PA15";
+
+PWM1.$name                      = "PWM_0";
+PWM1.ccIndex                    = [0];
+PWM1.clockDivider               = 8;
+PWM1.clockSource                = "MFCLK";
+PWM1.clockPrescale              = 100;
+PWM1.timerCount                 = 5000;
+PWM1.peripheral.ccp0Pin.$assign = "PA8";
+PWM1.PWM_CHANNEL_0.$name        = "ti_driverlib_pwm_PWMTimerCC0";
+PWM1.ccp0PinConfig.$name        = "ti_driverlib_gpio_GPIOPinGeneric0";
+
+SYSCTL.MFCLKEn = true;
+
+TIMER1.$name            = "TIMER_0";
+TIMER1.timerClkDiv      = 8;
+TIMER1.timerClkPrescale = 100;
+TIMER1.timerPeriod      = "1s";
+TIMER1.interrupts       = ["ZERO"];
+TIMER1.timerMode        = "PERIODIC";
+
+TIMER2.$name              = "TIMER_1";
+TIMER2.timerMode          = "PERIODIC";
+TIMER2.timerClkDiv        = 8;
+TIMER2.timerClkPrescale   = 100;
+TIMER2.timerPeriod        = "1s";
+TIMER2.interrupts         = ["ZERO"];
+TIMER2.peripheral.$assign = "TIMG1";
+
+UART1.$name                    = "UART_0";
+UART1.targetBaudRate           = 115200;
+UART1.peripheral.$assign       = "UART1";
+UART1.peripheral.rxPin.$assign = "PA11";
+UART1.peripheral.txPin.$assign = "PA10";
+UART1.txPinConfig.$name        = "ti_driverlib_gpio_GPIOPinGeneric1";
+UART1.rxPinConfig.$name        = "ti_driverlib_gpio_GPIOPinGeneric2";
+
+/**
+ * Pinmux solution for unlocked pins/peripherals. This ensures that minor changes to the automatic solver in a future
+ * version of the tool will not impact the pinmux you originally saw.  These lines can be completely deleted in order to
+ * re-solve from scratch.
+ */
+Board.peripheral.$suggestSolution            = "DEBUGSS";
+Board.peripheral.swclkPin.$suggestSolution   = "PA20";
+Board.peripheral.swdioPin.$suggestSolution   = "PA19";
+GPIO1.associatedPins[0].pin.$suggestSolution = "PA2";
+GPIO1.associatedPins[1].pin.$suggestSolution = "PA25";
+GPIO1.associatedPins[2].pin.$suggestSolution = "PA6";
+GPIO1.associatedPins[3].pin.$suggestSolution = "PA5";
+GPIO1.associatedPins[4].pin.$suggestSolution = "PA4";
+GPIO2.associatedPins[2].pin.$suggestSolution = "PA7";
+GPIO2.associatedPins[3].pin.$suggestSolution = "PA12";
+GPIO2.associatedPins[4].pin.$suggestSolution = "PA13";
+GPIO2.associatedPins[5].pin.$suggestSolution = "PA14";
+GPIO2.associatedPins[6].pin.$suggestSolution = "PA17/OPA1.IN0-";
+GPIO2.associatedPins[7].pin.$suggestSolution = "PA18";
+PWM1.peripheral.$suggestSolution             = "TIMG2";
+SYSCTL.peripheral.$suggestSolution           = "SYSCTL";
+TIMER1.peripheral.$suggestSolution           = "TIMG0";
